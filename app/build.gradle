@@ -2,6 +2,8 @@ plugins {
     id 'com.android.application'
 }
 
+apply plugin: 'com.huawei.agconnect'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -36,4 +38,7 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    //HMS dependency
+    implementation('com.huawei.hms:hwid:5.0.5.300')
+
 }

@@ -1,0 +1,14 @@
+{
+	"client":{
+		"appType":"1",
+		"cp_id":"5190090000028442539",
+		"product_id":"736430079244736933",
+		"client_id":"514802819228763328",
+		"client_secret":"7E33F7E71D361A1F1C9A1618261862237753B69F2B27061BF02D715D86737717",
+		"project_id":"736430079244736933",
+		"app_id":"103467459",
+		"api_key":"CgB6e3x9FdrcBcCKv7E36gqpwIBedSvXB9w6B2Ia3iwdaqOcfbimhLzvFXosEZTUMh0e/TYu8mQQnrfnyuD9NUUM",
+		"package_name":"com.huaweicontest.knockknock"
+	},
+	"configuration_version":"1.0"
+}

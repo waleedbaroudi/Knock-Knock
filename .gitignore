@@ -15,3 +15,4 @@
 local.properties
 /app/src/androidTest/java/com/
 /app/src/test/java/com/
+/Keystore/
