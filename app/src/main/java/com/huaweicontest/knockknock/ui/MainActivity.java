@@ -6,13 +6,12 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import com.huaweicontest.knockknock.R;
-import com.huaweicontest.knockknock.model.AccountControlKeyListener;
 import com.huaweicontest.knockknock.model.AccountHandler;
 
 public class MainActivity extends AppCompatActivity {
 
     Button signInButton;
-    
+
     AccountHandler handler;
 
     @Override
@@ -22,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
         signInButton = findViewById(R.id.sign_in_button);
         handler = new AccountHandler();
-        signInButton.setOnClickListener(new AccountControlKeyListener(handler));
+        signInButton.setOnClickListener(v -> handler.signIn());
 
     }
 }
