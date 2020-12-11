@@ -40,5 +40,10 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     //HMS dependency
     implementation('com.huawei.hms:hwid:5.0.5.300')
+    //Circular ImageView Library
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    //Glide Library
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
 }
