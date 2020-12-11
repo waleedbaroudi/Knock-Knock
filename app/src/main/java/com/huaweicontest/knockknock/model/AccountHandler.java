@@ -1,9 +1,11 @@
 package com.huaweicontest.knockknock.model;
 
 import android.content.Context;
+import android.content.Intent;
 import android.widget.Toast;
 
 import com.huawei.hmf.tasks.Task;
+import com.huawei.hms.common.ApiException;
 import com.huawei.hms.support.hwid.HuaweiIdAuthManager;
 import com.huawei.hms.support.hwid.request.HuaweiIdAuthParams;
 import com.huawei.hms.support.hwid.request.HuaweiIdAuthParamsHelper;
@@ -37,6 +39,16 @@ public class AccountHandler {
             Toast.makeText(context, "Authorization Needed", Toast.LENGTH_SHORT).show();
             listener.onAuthorizationNeeded(service);
         });
+    }
+
+    public void authenticateAndSignIn(Intent data) {
+        Task<AuthHuaweiId> authTask = HuaweiIdAuthManager.parseAuthResultFromIntent(data);
+        if (authTask.isSuccessful())
+            listener.onSignedIn(authTask.getResult());
+        else {
+            int failureCode = ((ApiException) authTask.getException()).getStatusCode();
+            Toast.makeText(context, "Failure code: " + failureCode, Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void revokeAuth() {
