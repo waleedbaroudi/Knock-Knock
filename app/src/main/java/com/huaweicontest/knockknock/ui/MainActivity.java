@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements AccountHandler.Ac
     //Views
     Button signInButton;
     FloatingActionButton signOutButton;
-    TextView nameLabel;
+    TextView nameLabel, welcomeLabel;
     CircleImageView userImage;
     //Account Control
     AccountHandler handler;
@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements AccountHandler.Ac
         signInButton = findViewById(R.id.sign_in_button);
         signOutButton = findViewById(R.id.signout_button);
         nameLabel = findViewById(R.id.name_label);
+        welcomeLabel = findViewById(R.id.welcome_label);
         userImage = findViewById(R.id.user_image);
 
         handler = new AccountHandler(this, this);
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements AccountHandler.Ac
         userImage.setVisibility(View.VISIBLE);
         nameLabel.setVisibility(View.VISIBLE);
         signOutButton.setVisibility(View.VISIBLE);
+        welcomeLabel.setVisibility(View.GONE);
         if (!sharedPreferences.getBoolean(SHOW_CASE_SHOWN_BOOL, false))
             displayShowCaseView();
     }
