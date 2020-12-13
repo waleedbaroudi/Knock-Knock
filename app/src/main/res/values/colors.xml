@@ -10,6 +10,7 @@
 
 
     <color name="custom_teal">#4D9078</color>
+    <color name="custom_dark_teal">#2D634F</color>
     <color name="custom_orange">#F78154</color>
     <color name="custom_yellow">#F2C14E</color>
     <color name="custom_light_yellow">#FFDB88</color>
