@@ -2,6 +2,19 @@
     <string name="app_name">Knock Knock</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="signed_in_button_label">Signed In!</string>
+    <string name="sign_in">Sign In</string>
+    <string name="showcase_primary">Sign Out</string>
+    <string name="showcase_secondary">Tap this button to sign out, tap and hold to sign out and revoke authorization</string>
+    <string name="signout_dialog_message_revoke">Are you sure you want to sign out and revoke authorization? this will require you to authorize this app again on your next sign in</string>
+    <string name="signout_dialog_message">Are you sure you want to sign out?</string>
+    <string name="signout_dialog_title">Sign Out</string>
+    <string name="signout_dialog_negative">Cancel</string>
+    <string name="signout_dialog_positive">Sign Out</string>
+    <string name="taost_authorization_needed">Authorization Needed</string>
+    <string name="toast_authorization_revoked">Authorization Revoked</string>
+    <string name="intro_gotit_button">Got it!</string>
+    <string name="welcome_label">Welcome!</string>
 
     <string-array name="intro_headings">
         <item>One-click sign-in</item>
@@ -9,7 +22,6 @@
         <item>Global coverage</item>
         <item>All-scenario access</item>
     </string-array>
-
     <string-array name="intro_texts">
         <item>Saves you the clumsy process of manual log in and verification. one tap is all you need!</item>
         <item>Guarantees two-factor authentication, real-time risk prediction, and GDPR compliance</item>

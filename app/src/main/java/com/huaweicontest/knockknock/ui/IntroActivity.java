@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
+import static com.huaweicontest.knockknock.model.Constant.*;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,7 +21,7 @@ import com.huaweicontest.knockknock.ui.fragments.IntroPagerSlide;
 
 public class IntroActivity extends AppCompatActivity {
 
-    private static final int INTRO_PAGE_COUNT = 4;
+
 
     ViewPager2 introPager;
     IntroSlideAdapter introPagerAdapter;
@@ -29,8 +30,7 @@ public class IntroActivity extends AppCompatActivity {
     Button skipButton, nextButton;
 
     SharedPreferences sharedPrefs;
-    public static final String APP_SHARED_PREFS = "M_SHARED_PREFS";
-    private static final String FIRST_LAUNCH_BOOL = "FIRST_LAUNCH";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +76,7 @@ public class IntroActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 if (position == INTRO_PAGE_COUNT - 1) {
-                    nextButton.setText("Got it!");
+                    nextButton.setText(R.string.intro_gotit_button);
                     nextButton.setOnClickListener(v -> launchMain());
                 }
             }
