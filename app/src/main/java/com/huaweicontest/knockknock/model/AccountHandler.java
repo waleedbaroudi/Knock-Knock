@@ -2,7 +2,6 @@ package com.huaweicontest.knockknock.model;
 
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
 import com.huawei.hmf.tasks.Task;
 import com.huawei.hms.common.ApiException;
@@ -28,20 +27,18 @@ public class AccountHandler {
         this.service = HuaweiIdAuthManager.getService(context, params);
     }
 
-    public void signIn() {
+    public void silentSignIn() {
         Task<AuthHuaweiId> authTask = service.silentSignIn();
         authTask.addOnSuccessListener(authID -> {
-            Toast.makeText(context, "Signed in!", Toast.LENGTH_SHORT).show();
             listener.onSignedIn(authID);
         });
 
         authTask.addOnFailureListener(e -> {
-            Toast.makeText(context, "Authorization Needed", Toast.LENGTH_SHORT).show();
-            listener.onAuthorizationNeeded(service);
+            listener.onAuthorizationNeeded(service.getSignInIntent());
         });
     }
 
-    public void authenticateAndSignIn(Intent data) {
+    public void authorizedSignIn(Intent data) {
         Task<AuthHuaweiId> authTask = HuaweiIdAuthManager.parseAuthResultFromIntent(data);
         if (authTask.isSuccessful())
             listener.onSignedIn(authTask.getResult());
@@ -52,11 +49,22 @@ public class AccountHandler {
     }
 
     public void revokeAuth() {
-
+        Task<Void> revokeAuthTask = service.cancelAuthorization();
+        revokeAuthTask.addOnCompleteListener(task -> {
+            if (task.isSuccessful())
+                listener.onSignedOut(true);
+            else {
+                if (task.getException() instanceof ApiException) {
+                    int code = ((ApiException) task.getException()).getStatusCode();
+                    listener.onAuthRevocationFailed(code);
+                }
+            }
+        });
     }
 
     public void signOut() {
-
+        Task<Void> signOutTask = service.signOut();
+        signOutTask.addOnCompleteListener(vd -> listener.onSignedOut(false));
     }
 
     public interface AccountControlListener {
@@ -64,7 +72,11 @@ public class AccountHandler {
 
         void onSignInFailed(int failureCode);
 
-        void onAuthorizationNeeded(HuaweiIdAuthService service);
+        void onAuthorizationNeeded(Intent signInIntent);
+
+        void onSignedOut(boolean isAuthRevoked);
+
+        void onAuthRevocationFailed(int failureCode);
     }
 
 }

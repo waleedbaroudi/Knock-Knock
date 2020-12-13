@@ -55,7 +55,13 @@ public class MainActivity extends AppCompatActivity implements AccountHandler.Ac
         signInButton.setOnClickListener(v -> {
             loginProgress.setVisibility(View.VISIBLE);
             signInButton.setEnabled(false);
-            handler.signIn();
+            handler.silentSignIn();
+        });
+
+        signOutButton.setOnClickListener(v -> handler.signOut());
+        signOutButton.setOnLongClickListener(v -> {
+            handler.revokeAuth();
+            return true;
         });
     }
 
@@ -95,8 +101,21 @@ public class MainActivity extends AppCompatActivity implements AccountHandler.Ac
     }
 
     @Override
-    public void onAuthorizationNeeded(HuaweiIdAuthService service) {
-        startActivityForResult(service.getSignInIntent(), LOGIN_REQUEST_CODE);
+    public void onAuthorizationNeeded(Intent signInIntent) {
+        Toast.makeText(this, "Authorization Needed", Toast.LENGTH_SHORT).show();
+        startActivityForResult(signInIntent, LOGIN_REQUEST_CODE);
+    }
+
+    @Override
+    public void onSignedOut(boolean isAuthRevoked) {
+        Toast.makeText(this, "SIGNED OUT", Toast.LENGTH_SHORT).show();
+        if (isAuthRevoked)
+            Toast.makeText(this, "Authorization Revoked", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onAuthRevocationFailed(int failureCode) {
+        Toast.makeText(this, "Revocation failed with code: " + failureCode, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -110,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements AccountHandler.Ac
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == LOGIN_REQUEST_CODE) {
-            handler.authenticateAndSignIn(data);
+            handler.authorizedSignIn(data);
         }
     }
 }
