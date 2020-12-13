@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Knock Knock</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="intro_headings">
+        <item>One Tap</item>
+        <item>Secure</item>
+        <item>Global</item>
+        <item>Versatile</item>
+    </string-array>
+
+    <string-array name="intro_texts">
+        <item>you can sign in with one tap</item>
+        <item>It is very secure</item>
+        <item>everybody uses it</item>
+        <item>you can do many things with it</item>
+    </string-array>
+
 </resources>
