@@ -43,7 +43,7 @@ public class IntroPagerSlide extends Fragment {
     private void setViewContents() {
         headings = getResources().getStringArray(R.array.intro_headings);
         texts = getResources().getStringArray(R.array.intro_texts);
-        imageResources = new int[]{R.drawable.touch, R.drawable.verified, R.drawable.global, R.drawable.molecular};
+        imageResources = new int[]{R.drawable.touch, R.drawable.secure, R.drawable.global, R.drawable.compatible};
         introHeading.setText(headings[position]);
         introText.setText(texts[position]);
         introFigure.setImageResource(imageResources[position]);

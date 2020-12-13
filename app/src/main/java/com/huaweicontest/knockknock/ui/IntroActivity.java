@@ -8,6 +8,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,15 +26,40 @@ public class IntroActivity extends AppCompatActivity {
     IntroSlideAdapter introPagerAdapter;
     TabLayout introIndicator;
 
-    Button skipButton;
+    Button skipButton, nextButton;
+
+    SharedPreferences sharedPrefs;
+    private static final String APP_SHARED_PREFS = "M_SHARED_PREFS";
+    private static final String FIRST_LAUNCH_BOOL = "FIRST_LAUNCH";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intro);
+        sharedPrefs = getSharedPreferences(APP_SHARED_PREFS, MODE_PRIVATE);
+        if (!sharedPrefs.getBoolean(FIRST_LAUNCH_BOOL, true))
+            //skip intro if it's not the first launch of the app
+            launchMain();
+        setupButtons();
         setupIntroPager();
+    }
+
+    private void setupButtons() {
         skipButton = findViewById(R.id.skip_intro_button);
-        skipButton.setOnClickListener(v -> startActivity(new Intent(IntroActivity.this, MainActivity.class)));
+        skipButton.setOnClickListener(v -> launchMain());
+
+        nextButton = findViewById(R.id.next_slide_button);
+        nextButton.setOnClickListener(v -> {
+            int current = introIndicator.getSelectedTabPosition();
+            if (current < INTRO_PAGE_COUNT - 1)
+                introPager.setCurrentItem(current + 1, true);
+        });
+    }
+
+    private void launchMain() {
+        sharedPrefs.edit().putBoolean(FIRST_LAUNCH_BOOL, false).apply();
+        startActivity(new Intent(IntroActivity.this, MainActivity.class));
+        finish();
     }
 
     private void setupIntroPager() {
@@ -44,6 +70,17 @@ public class IntroActivity extends AppCompatActivity {
         TabLayoutMediator mediator = new TabLayoutMediator(introIndicator, introPager, (tab, position) -> {
         });
         mediator.attach();
+
+        introPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                if (position == INTRO_PAGE_COUNT - 1) {
+                    nextButton.setText("Got it!");
+                    nextButton.setOnClickListener(v -> launchMain());
+                }
+            }
+        });
     }
 
     @Override

@@ -23,7 +23,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:elevation="3dp"
+        android:fontFamily="sans-serif-medium"
         android:text="TextView"
+        android:textColor="@color/custom_orange"
         android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/intro_text"
         app:layout_constraintEnd_toEndOf="@+id/intro_figure"
@@ -32,13 +35,18 @@
 
     <TextView
         android:id="@+id/intro_text"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="sans-serif-light"
         android:text="TextView"
+        android:textAlignment="center"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/intro_heading"
-        app:layout_constraintStart_toStartOf="@+id/intro_heading"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/intro_heading" />
 
 
