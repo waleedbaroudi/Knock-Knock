@@ -47,7 +47,7 @@ public class AccountHandler {
             listener.onSignedIn(authTask.getResult());
         else {
             int failureCode = ((ApiException) authTask.getException()).getStatusCode();
-            Toast.makeText(context, "Failure code: " + failureCode, Toast.LENGTH_SHORT).show();
+            listener.onSignInFailed(failureCode);
         }
     }
 
@@ -61,6 +61,8 @@ public class AccountHandler {
 
     public interface AccountControlListener {
         void onSignedIn(AuthHuaweiId userID);
+
+        void onSignInFailed(int failureCode);
 
         void onAuthorizationNeeded(HuaweiIdAuthService service);
     }

@@ -7,11 +7,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -29,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements AccountHandler.Ac
     FloatingActionButton signOutButton;
     TextView nameLabel, welcomeLabel;
     CircleImageView userImage;
+    ProgressBar loginProgress;
     //Account Control
     AccountHandler handler;
     private static final int LOGIN_REQUEST_CODE = 1003;
@@ -47,16 +49,24 @@ public class MainActivity extends AppCompatActivity implements AccountHandler.Ac
         nameLabel = findViewById(R.id.name_label);
         welcomeLabel = findViewById(R.id.welcome_label);
         userImage = findViewById(R.id.user_image);
+        loginProgress = findViewById(R.id.sign_in_progress);
 
         handler = new AccountHandler(this, this);
-        signInButton.setOnClickListener(v -> handler.signIn());
+        signInButton.setOnClickListener(v -> {
+            loginProgress.setVisibility(View.VISIBLE);
+            signInButton.setEnabled(false);
+            handler.signIn();
+        });
     }
 
-    private void showSignedInViews() {
+    private void applySignedInUIModifications() {
         userImage.setVisibility(View.VISIBLE);
         nameLabel.setVisibility(View.VISIBLE);
         signOutButton.setVisibility(View.VISIBLE);
         welcomeLabel.setVisibility(View.GONE);
+        loginProgress.setVisibility(View.GONE);
+        signInButton.setText("Signed In!");
+
         if (!sharedPreferences.getBoolean(SHOW_CASE_SHOWN_BOOL, false))
             displayShowCaseView();
     }
@@ -81,12 +91,19 @@ public class MainActivity extends AppCompatActivity implements AccountHandler.Ac
         if (!TextUtils.isEmpty(userImageUri.toString())) {
             Glide.with(this).load(userImageUri.toString()).into(userImage);
         }
-        showSignedInViews();
+        applySignedInUIModifications();
     }
 
     @Override
     public void onAuthorizationNeeded(HuaweiIdAuthService service) {
         startActivityForResult(service.getSignInIntent(), LOGIN_REQUEST_CODE);
+    }
+
+    @Override
+    public void onSignInFailed(int failureCode) {
+        Toast.makeText(this, "Failure code: " + failureCode, Toast.LENGTH_SHORT).show();
+        signInButton.setEnabled(true);
+        loginProgress.setVisibility(View.GONE);
     }
 
     @Override
