@@ -1,8 +1,10 @@
 package com.huaweicontest.knockknock.ui;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -58,9 +60,9 @@ public class MainActivity extends AppCompatActivity implements AccountHandler.Ac
             handler.silentSignIn();
         });
 
-        signOutButton.setOnClickListener(v -> handler.signOut());
+        signOutButton.setOnClickListener(v -> showSignOutDialog(false));
         signOutButton.setOnLongClickListener(v -> {
-            handler.revokeAuth();
+            showSignOutDialog(true);
             return true;
         });
     }
@@ -77,6 +79,15 @@ public class MainActivity extends AppCompatActivity implements AccountHandler.Ac
             displayShowCaseView();
     }
 
+    private void applySignedOutUIModifications() {
+        userImage.setVisibility(View.GONE);
+        nameLabel.setVisibility(View.GONE);
+        signOutButton.setVisibility(View.GONE);
+        welcomeLabel.setVisibility(View.VISIBLE);
+        signInButton.setText("Sign In");
+        signInButton.setEnabled(true);
+    }
+
     private void displayShowCaseView() {
         MaterialTapTargetPrompt.Builder showCaseBuilder = new MaterialTapTargetPrompt.Builder(this);
         showCaseBuilder.setTarget(signOutButton)
@@ -88,6 +99,24 @@ public class MainActivity extends AppCompatActivity implements AccountHandler.Ac
                     if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED || state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED)
                         sharedPreferences.edit().putBoolean(SHOW_CASE_SHOWN_BOOL, true).apply();
                 }).show();
+    }
+
+    private void showSignOutDialog(boolean revoke) {
+        String message = revoke ? "Are you sure you want to sign out and revoke authorization? this " +
+                "will require you to authorize this app again on your next sign in"
+                : "Are you sure you want to sign out?";
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this, R.style.DialogTheme);
+        dialogBuilder.setTitle("Sign Out")
+                .setMessage(message)
+                .setPositiveButton("Sign Out", (dialog, which) -> {
+                    if (revoke)
+                        handler.revokeAuth();
+                    else
+                        handler.signOut();
+                    applySignedOutUIModifications();
+                })
+                .setNegativeButton("Cancel", null)
+                .create().show();
     }
 
     @Override
@@ -107,6 +136,13 @@ public class MainActivity extends AppCompatActivity implements AccountHandler.Ac
     }
 
     @Override
+    public void onSignInFailed(int failureCode) {
+        Toast.makeText(this, "Failure code: " + failureCode, Toast.LENGTH_SHORT).show();
+        signInButton.setEnabled(true);
+        loginProgress.setVisibility(View.GONE);
+    }
+
+    @Override
     public void onSignedOut(boolean isAuthRevoked) {
         Toast.makeText(this, "SIGNED OUT", Toast.LENGTH_SHORT).show();
         if (isAuthRevoked)
@@ -116,13 +152,6 @@ public class MainActivity extends AppCompatActivity implements AccountHandler.Ac
     @Override
     public void onAuthRevocationFailed(int failureCode) {
         Toast.makeText(this, "Revocation failed with code: " + failureCode, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onSignInFailed(int failureCode) {
-        Toast.makeText(this, "Failure code: " + failureCode, Toast.LENGTH_SHORT).show();
-        signInButton.setEnabled(true);
-        loginProgress.setVisibility(View.GONE);
     }
 
     @Override
