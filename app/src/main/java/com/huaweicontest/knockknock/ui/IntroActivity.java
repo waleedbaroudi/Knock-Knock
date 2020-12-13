@@ -18,7 +18,7 @@ import com.huaweicontest.knockknock.ui.fragments.IntroPagerSlide;
 
 public class IntroActivity extends AppCompatActivity {
 
-    private static final int INTRO_PAGE_COUNT = 5;
+    private static final int INTRO_PAGE_COUNT = 4;
     ViewPager2 introPager;
     IntroSlideAdapter introPagerAdapter;
 

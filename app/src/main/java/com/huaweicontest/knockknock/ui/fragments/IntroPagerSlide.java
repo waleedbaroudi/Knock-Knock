@@ -36,11 +36,7 @@ public class IntroPagerSlide extends Fragment {
         introHeading = root.findViewById(R.id.intro_heading);
         introText = root.findViewById(R.id.intro_text);
         introFigure = root.findViewById(R.id.intro_figure);
-        try {
-            setViewContents();
-        } catch (Exception ignored) {
-        }
-
+        setViewContents();
         return root;
     }
 
