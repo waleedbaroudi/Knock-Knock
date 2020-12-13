@@ -48,5 +48,7 @@ dependencies {
     //Glide Library
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    //showcase view library
+    implementation 'uk.co.samuelwall:material-tap-target-prompt:3.0.1'
 
 }

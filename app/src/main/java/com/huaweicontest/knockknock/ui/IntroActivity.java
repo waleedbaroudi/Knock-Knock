@@ -29,7 +29,7 @@ public class IntroActivity extends AppCompatActivity {
     Button skipButton, nextButton;
 
     SharedPreferences sharedPrefs;
-    private static final String APP_SHARED_PREFS = "M_SHARED_PREFS";
+    public static final String APP_SHARED_PREFS = "M_SHARED_PREFS";
     private static final String FIRST_LAUNCH_BOOL = "FIRST_LAUNCH";
 
     @Override
