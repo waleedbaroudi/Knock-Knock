@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Knock Knock</string>
+    <string name="sign_in">Oturum Aç</string>
+    <string name="signed_in_button_label">Giriş Yapıldı</string>
+    <string name="showcase_primary">Oturumu Kapat</string>
+    <string name="showcase_secondary">Oturumu kapatmak için bu butona basın, oturumu kapatmak ve yetkilendirmeyi iptal etmek için basılı tutun</string>
+    <string name="signout_dialog_title">Oturumu Kapat</string>
+    <string name="signout_dialog_positive">Çık</string>
+    <string name="welcome_label">Hoşgeldiniz!</string>
+    <string name="intro_gotit_button">Anladım!</string>
+    <string name="signout_dialog_negative">Iptal</string>
+    <string name="taost_authorization_needed">Yetki gerekli</string>
+    <string name="toast_authorization_revoked">Yetki iptal edildi</string>
+    <string name="signout_dialog_message">Çıkış yapmak istediğinizden emin misiniz?</string>
+    <string name="signout_dialog_message_revoke">Oturumu kapatıp yetkilendirmeyi iptal etmek istediğinizden emin misiniz? bu, bir sonraki oturum açışınızda bu uygulamayı tekrar yetkilendirmenizi gerektirecektir</string>
+
+    <string-array name="intro_headings">
+        <item>Tek Tıkla Oturum Açma</item>
+        <item>Yüksek Güvenlik</item>
+        <item>Küresel Kapsam</item>
+        <item>Tüm Senaryo Erişimi</item>
+    </string-array>
+    <string-array name="intro_texts">
+        <item>El ile oturum açma ve doğrulama işleminin beceriksiz sürecinden sizi kurtarır. Tek ihtiyacınız olan tek basış!</item>
+        <item>İki faktörlü kimlik doğrulamayı, gerçek zamanlı risk tahminini ve GDPR uyumluluğunu garanti eder</item>
+        <item>Dünya çapında 190\'dan fazla ülke ve bölgeden 900 milyondan fazla kullanıcıya hizmet veriyor ve 70\'ten fazla dili destekliyor..</item>
+        <item>Telefonlar, tabletler, akıllı ekranlar, baş üniteleri ve akıllı giyilebilir cihazlar dahil neredeyse tüm cihaz türlerinden erişimi destekler.</item>
+    </string-array>
+    <string name="next_button">Sonraki</string>
+    <string name="skip_button">Atlama</string>
+    <string name="splash_slogan">Tek tıklamayla oturum açma uygulamanız</string>
+
+</resources>

@@ -42,12 +42,15 @@ public class ProfileActivity extends AppCompatActivity implements AccountHandler
         userID = handler.getCurrentUserAccount();
 
         setupUIElements();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         //show sign out button instructions if it's the first log in
         if (!sharedPreferences.getBoolean(SHOWCASE_SHOWN_BOOL, false))
             displayShowCaseView();
     }
-
 
     @Override
     public void onBackPressed() {

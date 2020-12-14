@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Knock Knock</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="signed_in_button_label">Signed In!</string>
     <string name="sign_in">Sign In</string>
     <string name="showcase_primary">Sign Out</string>
@@ -15,6 +13,9 @@
     <string name="toast_authorization_revoked">Authorization Revoked</string>
     <string name="intro_gotit_button">Got it!</string>
     <string name="welcome_label">Welcome!</string>
+    <string name="skip_button">skip</string>
+    <string name="next_button">next</string>
+    <string name="splash_slogan">Your one-tap sign-in application</string>
 
     <string-array name="intro_headings">
         <item>One-click sign-in</item>
@@ -23,7 +24,7 @@
         <item>All-scenario access</item>
     </string-array>
     <string-array name="intro_texts">
-        <item>Saves you the clumsy process of manual log in and verification. one tap is all you need!</item>
+        <item>Saves you the clumsy process of manual sign-in and verification. one tap is all you need!</item>
         <item>Guarantees two-factor authentication, real-time risk prediction, and GDPR compliance</item>
         <item>Serves over 900 million users from 190+ countries and regions worldwide and supports 70+ languages.</item>
         <item>Supports access from nearly all device types, including phones, tablets, smart screens, head units, and smart wearables.</item>

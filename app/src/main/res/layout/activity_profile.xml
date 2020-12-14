@@ -45,8 +45,7 @@
         android:clickable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_login_24"
-        android:focusable="true" />
+        app:srcCompat="@drawable/ic_baseline_login_24" />
 
     <View
         android:id="@+id/view"
