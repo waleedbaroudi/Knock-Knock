@@ -130,7 +130,6 @@ public class MainActivity extends AppCompatActivity implements AccountHandler.Ac
     @Override
     public void onAuthorizationNeeded(Intent signInIntent) {
         Toast.makeText(this, getString(R.string.taost_authorization_needed), Toast.LENGTH_SHORT).show();
-        startActivityForResult(signInIntent, LOGIN_REQUEST_CODE);
     }
 
     @Override
