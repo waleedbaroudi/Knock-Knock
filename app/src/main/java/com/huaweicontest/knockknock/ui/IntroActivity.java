@@ -58,7 +58,7 @@ public class IntroActivity extends AppCompatActivity {
 
     private void launchMain() {
         sharedPrefs.edit().putBoolean(FIRST_LAUNCH_BOOL, false).apply();
-        startActivity(new Intent(IntroActivity.this, MainActivity.class));
+        startActivity(new Intent(IntroActivity.this, LoginActivity.class));
         finish();
     }
 

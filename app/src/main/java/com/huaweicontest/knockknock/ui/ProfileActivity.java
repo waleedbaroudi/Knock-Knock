@@ -38,6 +38,8 @@ public class ProfileActivity extends AppCompatActivity implements AccountHandler
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         sharedPreferences = getSharedPreferences(Constant.APP_SHARED_PREFS, MODE_PRIVATE);
+        handler = AccountHandler.getInstance(this, this);
+        userID = handler.getCurrentUserAccount();
 
         signOutButton = findViewById(R.id.signout_button);
         nameLabel = findViewById(R.id.name_label);
@@ -57,6 +59,11 @@ public class ProfileActivity extends AppCompatActivity implements AccountHandler
 
         if (!sharedPreferences.getBoolean(SHOW_CASE_SHOWN_BOOL, false))
             displayShowCaseView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     private void showSignOutDialog(boolean revoke) {
@@ -91,7 +98,7 @@ public class ProfileActivity extends AppCompatActivity implements AccountHandler
     @Override
     public void onSignedOut(boolean isAuthRevoked) {
         if (isAuthRevoked)
-            Toast.makeText(this, getString(R.string.toast_authorization_revoked), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.toast_authorization_revoked), Toast.LENGTH_SHORT).show();
         finish();
     }
 

@@ -1,14 +1,11 @@
 package com.huaweicontest.knockknock.ui;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -17,16 +14,11 @@ import android.widget.Toast;
 
 import static com.huaweicontest.knockknock.model.Constant.*;
 
-import com.bumptech.glide.Glide;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.huawei.hms.support.hwid.result.AuthHuaweiId;
 import com.huaweicontest.knockknock.R;
 import com.huaweicontest.knockknock.model.AccountHandler;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
-
-public class MainActivity extends AppCompatActivity implements AccountHandler.AccountControlListener {
+public class LoginActivity extends AppCompatActivity implements AccountHandler.AccountControlListener {
     //Views
     Button signInButton;
     TextView welcomeLabel;
@@ -40,14 +32,13 @@ public class MainActivity extends AppCompatActivity implements AccountHandler.Ac
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
         sharedPreferences = getSharedPreferences(APP_SHARED_PREFS, MODE_PRIVATE);
 
         signInButton = findViewById(R.id.sign_in_button);
         welcomeLabel = findViewById(R.id.welcome_label);
         loginProgress = findViewById(R.id.sign_in_progress);
 
-        handler = new AccountHandler(this, this);
         signInButton.setOnClickListener(v -> {
             loginProgress.setVisibility(View.VISIBLE);
             signInButton.setEnabled(false);
@@ -56,9 +47,20 @@ public class MainActivity extends AppCompatActivity implements AccountHandler.Ac
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        /*
+        assigning handler here to make sure the service context and control listener are
+        are set to this activity when coming back from profile activity after successful sign out
+         */
+        handler = AccountHandler.getInstance(this, this);
+        signInButton.setEnabled(true);
+    }
+
+    @Override
     public void onSignedIn(AuthHuaweiId userID) {
         loginProgress.setVisibility(View.GONE);
-        startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+        startActivity(new Intent(LoginActivity.this, ProfileActivity.class));
     }
 
     @Override
