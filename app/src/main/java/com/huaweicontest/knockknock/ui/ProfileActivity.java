@@ -1,14 +1,14 @@
 package com.huaweicontest.knockknock.ui;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -20,44 +20,31 @@ import com.huaweicontest.knockknock.model.Constant;
 import de.hdodenhof.circleimageview.CircleImageView;
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
 
-import static com.huaweicontest.knockknock.model.Constant.SHOW_CASE_SHOWN_BOOL;
+import static com.huaweicontest.knockknock.model.Constant.SHOWCASE_SHOWN_BOOL;
 
 public class ProfileActivity extends AppCompatActivity implements AccountHandler.AccountControlListener {
 
     FloatingActionButton signOutButton;
     TextView nameLabel;
     CircleImageView userImage;
-
     SharedPreferences sharedPreferences;
 
-    AccountHandler handler; //todo: define this after modifying the handler class
-    AuthHuaweiId userID; //todo: define this
+    AccountHandler handler;
+    AuthHuaweiId userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         sharedPreferences = getSharedPreferences(Constant.APP_SHARED_PREFS, MODE_PRIVATE);
+        //initialize handler and get current user
         handler = AccountHandler.getInstance(this, this);
         userID = handler.getCurrentUserAccount();
 
-        signOutButton = findViewById(R.id.signout_button);
-        nameLabel = findViewById(R.id.name_label);
-        userImage = findViewById(R.id.user_image);
+        setupUIElements();
 
-        signOutButton.setOnClickListener(v -> showSignOutDialog(false));
-        signOutButton.setOnLongClickListener(v -> {
-            showSignOutDialog(true);
-            return true;
-        });
-
-        nameLabel.setText(userID.getDisplayName());
-        Uri userImageUri = userID.getAvatarUri();
-        if (!TextUtils.isEmpty(userImageUri.toString())) {
-            Glide.with(this).load(userImageUri.toString()).into(userImage);
-        }
-
-        if (!sharedPreferences.getBoolean(SHOW_CASE_SHOWN_BOOL, false))
+        //show sign out button instructions if it's the first log in
+        if (!sharedPreferences.getBoolean(SHOWCASE_SHOWN_BOOL, false))
             displayShowCaseView();
     }
 
@@ -65,6 +52,27 @@ public class ProfileActivity extends AppCompatActivity implements AccountHandler
     @Override
     public void onBackPressed() {
         showSignOutDialog(false);
+    }
+
+    private void setupUIElements() {
+        // initialize elements
+        signOutButton = findViewById(R.id.signout_button);
+        nameLabel = findViewById(R.id.name_label);
+        userImage = findViewById(R.id.user_image);
+        //set user's name
+        nameLabel.setText(userID.getDisplayName());
+        //set click to show sign out dialog without auth revocation message
+        signOutButton.setOnClickListener(v -> showSignOutDialog(false));
+        //set long click to show sign out dialog with auth revocation message
+        signOutButton.setOnLongClickListener(v -> {
+            showSignOutDialog(true);
+            return true;
+        });
+        //get user profile picture and, if available, show it.
+        Uri userImageUri = userID.getAvatarUri();
+        if (!TextUtils.isEmpty(userImageUri.toString())) {
+            Glide.with(this).load(userImageUri.toString()).into(userImage);
+        }
     }
 
     private void showSignOutDialog(boolean revoke) {
@@ -92,7 +100,7 @@ public class ProfileActivity extends AppCompatActivity implements AccountHandler
                 .setBackgroundColour(getResources().getColor(R.color.custom_orange))
                 .setPromptStateChangeListener((prompt, state) -> {
                     if (state == MaterialTapTargetPrompt.STATE_FOCAL_PRESSED || state == MaterialTapTargetPrompt.STATE_NON_FOCAL_PRESSED)
-                        sharedPreferences.edit().putBoolean(SHOW_CASE_SHOWN_BOOL, true).apply();
+                        sharedPreferences.edit().putBoolean(SHOWCASE_SHOWN_BOOL, true).apply();
                 }).show();
     }
 
