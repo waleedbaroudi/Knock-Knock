@@ -15,7 +15,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.huawei.hms.support.hwid.result.AuthHuaweiId;
 import com.huaweicontest.knockknock.R;
 import com.huaweicontest.knockknock.model.AccountHandler;
 
@@ -63,12 +62,18 @@ public class LoginActivity extends AppCompatActivity implements AccountHandler.A
         signInButton.setEnabled(true);
     }
 
-    private void animateIn() { // animates login activity views back in
+    /**
+     * animates login activity views back in after coming back from profile activity
+     */
+    private void animateIn() {
         welcomeLabel.animate().translationX(0).setDuration(LOGIN_ANIM_DURATION).setInterpolator(new DecelerateInterpolator());
         signInButton.animate().translationX(0).setDuration(LOGIN_ANIM_DURATION).setInterpolator(new DecelerateInterpolator());
     }
 
-    private void animateOut() { // animates login activity views out and goes to profile activity
+    /**
+     * animates login activity views out and goes to profile activity
+     */
+    private void animateOut() {
         DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         welcomeLabel.animate().translationX(-metrics.widthPixels).setDuration(LOGIN_ANIM_DURATION).setInterpolator(new AccelerateInterpolator());
@@ -76,18 +81,31 @@ public class LoginActivity extends AppCompatActivity implements AccountHandler.A
                 .withEndAction(() -> startActivity(new Intent(LoginActivity.this, ProfileActivity.class)));
     }
 
+    /**
+     * hides the progress bar and animates the views out
+     */
     @Override
-    public void onSignedIn(AuthHuaweiId userID) {
+    public void onSignedIn() {
         loginProgress.setVisibility(View.GONE);
         animateOut();
     }
 
+    /**
+     * toasts that authorization is needed and starts authorization process
+     *
+     * @param signInIntent the intent that initiates authorization
+     */
     @Override
     public void onAuthorizationNeeded(Intent signInIntent) {
         Toast.makeText(this, getString(R.string.taost_authorization_needed), Toast.LENGTH_SHORT).show();
         startActivityForResult(signInIntent, LOGIN_REQUEST_CODE);
     }
 
+    /**
+     * toasts failure code, hides progress bar, and enables the sign in button back.
+     *
+     * @param failureCode the code with which the silent sign in failed
+     */
     @Override
     public void onSignInFailed(int failureCode) {
         Toast.makeText(this, "Failure code: " + failureCode, Toast.LENGTH_SHORT).show();
@@ -99,6 +117,7 @@ public class LoginActivity extends AppCompatActivity implements AccountHandler.A
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == LOGIN_REQUEST_CODE) {
+            //authorization process ended, attempt sign in.
             handler.authorizedSignIn(data);
         }
     }

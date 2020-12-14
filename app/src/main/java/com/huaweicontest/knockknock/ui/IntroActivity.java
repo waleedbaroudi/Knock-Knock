@@ -1,32 +1,32 @@
 package com.huaweicontest.knockknock.ui;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
-import static com.huaweicontest.knockknock.model.Constant.*;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
+
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.huaweicontest.knockknock.R;
 import com.huaweicontest.knockknock.ui.fragments.IntroPagerSlide;
 
+import static com.huaweicontest.knockknock.model.Constant.APP_SHARED_PREFS;
+import static com.huaweicontest.knockknock.model.Constant.FIRST_LAUNCH_BOOL;
+import static com.huaweicontest.knockknock.model.Constant.INTRO_PAGE_COUNT;
+
 public class IntroActivity extends AppCompatActivity {
-
-
-
+    //Pager Views
     ViewPager2 introPager;
     IntroSlideAdapter introPagerAdapter;
     TabLayout introIndicator;
-
     Button skipButton, nextButton;
 
     SharedPreferences sharedPrefs;
@@ -44,6 +44,9 @@ public class IntroActivity extends AppCompatActivity {
         setupIntroPager();
     }
 
+    /**
+     * sets up the buttons that control the app intro
+     */
     private void setupButtons() {
         skipButton = findViewById(R.id.skip_intro_button);
         skipButton.setOnClickListener(v -> launchMain());
@@ -56,12 +59,21 @@ public class IntroActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * registers first launch to shared preferences and starts the login activity.
+     * finishes this activity to prevent getting back to it through a back press
+     * from login activity
+     */
     private void launchMain() {
         sharedPrefs.edit().putBoolean(FIRST_LAUNCH_BOOL, false).apply();
         startActivity(new Intent(IntroActivity.this, LoginActivity.class));
         finish();
     }
 
+    /**
+     * initializes the pager, creates the adapter, and associates the tab layout to the pager
+     * so that pages are indicated with dots
+     */
     private void setupIntroPager() {
         introPager = findViewById(R.id.intro_pager);
         introIndicator = findViewById(R.id.intro_indicator);
@@ -100,7 +112,10 @@ public class IntroActivity extends AppCompatActivity {
             introPager.setCurrentItem(current - 1, true);
     }
 
-    private class IntroSlideAdapter extends FragmentStateAdapter {
+    /**
+     * custom adapter for the intro pager
+     */
+    private static class IntroSlideAdapter extends FragmentStateAdapter {
 
 
         public IntroSlideAdapter(@NonNull FragmentActivity fragmentActivity) {

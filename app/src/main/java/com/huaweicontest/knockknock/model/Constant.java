@@ -1,5 +1,8 @@
 package com.huaweicontest.knockknock.model;
 
+/**
+ * a final class that holds universal app constants
+ */
 public final class Constant {
     public static final int LOGIN_REQUEST_CODE = 1003;
     public static final String SHOWCASE_SHOWN_BOOL = "SHOWCASE_SHOWN";

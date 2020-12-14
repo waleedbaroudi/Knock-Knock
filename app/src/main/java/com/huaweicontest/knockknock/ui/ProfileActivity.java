@@ -57,6 +57,9 @@ public class ProfileActivity extends AppCompatActivity implements AccountHandler
         showSignOutDialog(false);
     }
 
+    /**
+     * initializes the ui elements
+     */
     private void setupUIElements() {
         // initialize elements
         signOutButton = findViewById(R.id.signout_button);
@@ -78,6 +81,11 @@ public class ProfileActivity extends AppCompatActivity implements AccountHandler
         }
     }
 
+    /**
+     * shows the dialog for sign out confirmation
+     *
+     * @param revoke whether the user wants to revoke authorization or not.
+     */
     private void showSignOutDialog(boolean revoke) {
         String message = revoke ? getString(R.string.signout_dialog_message_revoke)
                 : getString(R.string.signout_dialog_message);
@@ -94,6 +102,9 @@ public class ProfileActivity extends AppCompatActivity implements AccountHandler
                 .create().show();
     }
 
+    /**
+     * displays the showcase view that states the behavior of the sign out button
+     */
     private void displayShowCaseView() {
         MaterialTapTargetPrompt.Builder showCaseBuilder = new MaterialTapTargetPrompt.Builder(this);
         showCaseBuilder.setTarget(signOutButton)
@@ -107,6 +118,11 @@ public class ProfileActivity extends AppCompatActivity implements AccountHandler
                 }).show();
     }
 
+    /**
+     * finishes this activity
+     *
+     * @param isAuthRevoked whether the user chose to revoke authorization with sign out
+     */
     @Override
     public void onSignedOut(boolean isAuthRevoked) {
         if (isAuthRevoked)
@@ -114,6 +130,7 @@ public class ProfileActivity extends AppCompatActivity implements AccountHandler
         finish();
     }
 
+    
     @Override
     public void onAuthRevocationFailed(int failureCode) {
         Toast.makeText(this, "Revocation failed with code: " + failureCode, Toast.LENGTH_SHORT).show();

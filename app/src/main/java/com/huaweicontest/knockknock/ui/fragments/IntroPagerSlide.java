@@ -1,13 +1,12 @@
 package com.huaweicontest.knockknock.ui.fragments;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.huaweicontest.knockknock.R;
 
@@ -32,14 +31,17 @@ public class IntroPagerSlide extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ViewGroup root = (ViewGroup) inflater.inflate(R.layout.fragment_intro_pager_slide, container, false);
-        introHeading = root.findViewById(R.id.intro_heading);
-        introText = root.findViewById(R.id.intro_text);
-        introFigure = root.findViewById(R.id.intro_figure);
+        ViewGroup slide = (ViewGroup) inflater.inflate(R.layout.fragment_intro_pager_slide, container, false);
+        introHeading = slide.findViewById(R.id.intro_heading);
+        introText = slide.findViewById(R.id.intro_text);
+        introFigure = slide.findViewById(R.id.intro_figure);
         setViewContents();
-        return root;
+        return slide;
     }
 
+    /**
+     * gets the contents of the current slide depending on the position and displays them
+     */
     private void setViewContents() {
         headings = getResources().getStringArray(R.array.intro_headings);
         texts = getResources().getStringArray(R.array.intro_texts);
