@@ -2,6 +2,8 @@ package com.huaweicontest.knockknock.model;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.huawei.hmf.tasks.Task;
 import com.huawei.hms.common.ApiException;
@@ -12,6 +14,7 @@ import com.huawei.hms.support.hwid.result.AuthHuaweiId;
 import com.huawei.hms.support.hwid.service.HuaweiIdAuthService;
 
 public class AccountHandler {
+    private static final String TAG = "AccountHandler";
 
     AccountControlListener listener;
     Context context;
@@ -57,6 +60,7 @@ public class AccountHandler {
                 if (task.getException() instanceof ApiException) {
                     int code = ((ApiException) task.getException()).getStatusCode();
                     listener.onAuthRevocationFailed(code);
+                    listener.onSignedOut(false);
                 }
             }
         });
@@ -68,15 +72,30 @@ public class AccountHandler {
     }
 
     public interface AccountControlListener {
-        void onSignedIn(AuthHuaweiId userID);
+        /*
+        methods are made default so that some of them are not unnecessarily implemented in the
+        implementing classes (e.g. onSignedIn in ProfileActivity)
+         */
+        default void onSignedIn(AuthHuaweiId userID) {
+            Log.w(TAG, "onSignedIn: this method is not yet implemented", new IllegalStateException());
+        }
 
-        void onSignInFailed(int failureCode);
 
-        void onAuthorizationNeeded(Intent signInIntent);
+        default void onSignInFailed(int failureCode) {
+            Log.w(TAG, "onSignInFailed: this method is not yet implemented", new IllegalStateException());
+        }
 
-        void onSignedOut(boolean isAuthRevoked);
+        default void onAuthorizationNeeded(Intent signInIntent) {
+            Log.w(TAG, "onAuthorizationNeeded: this method is not yet implemented", new IllegalStateException());
+        }
 
-        void onAuthRevocationFailed(int failureCode);
+        default void onSignedOut(boolean isAuthRevoked) {
+            Log.w(TAG, "onSignedOut: this method is not yet implemented", new IllegalStateException());
+        }
+
+        default void onAuthRevocationFailed(int failureCode) {
+            Log.w(TAG, "onAuthRevocationFailed: this method is not yet implemented", new IllegalStateException());
+        }
     }
 
 }
