@@ -36,6 +36,7 @@ public class SplashActivity extends AppCompatActivity {
                     startActivity(new Intent(SplashActivity.this, IntroActivity.class));
                 else
                     startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                finish();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -52,12 +53,5 @@ public class SplashActivity extends AppCompatActivity {
                 .translationY(Constant.SPLASH_SLOGAN_SLIDE_DISTANCE)
                 .setInterpolator(new DecelerateInterpolator())
                 .setDuration(Constant.SPLASH_ANIM_DURATION);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        int uiOption = View.SYSTEM_UI_FLAG_FULLSCREEN;
-        getWindow().getDecorView().setSystemUiVisibility(uiOption);
     }
 }

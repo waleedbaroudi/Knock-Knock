@@ -8,6 +8,6 @@ public final class Constant {
     public static final String FIRST_LAUNCH_BOOL = "FIRST_LAUNCH";
     public static final int SPLASH_DURATION = 2500;
     public static final int SPLASH_LOGO_SLIDE_DISTANCE = 150;
-    public static final int SPLASH_SLOGAN_SLIDE_DISTANCE = -30;
+    public static final int SPLASH_SLOGAN_SLIDE_DISTANCE = -90;
     public static final int SPLASH_ANIM_DURATION = 1200;
 }
