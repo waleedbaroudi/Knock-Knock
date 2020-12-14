@@ -10,4 +10,6 @@ public final class Constant {
     public static final int SPLASH_LOGO_SLIDE_DISTANCE = 150;
     public static final int SPLASH_SLOGAN_SLIDE_DISTANCE = -90;
     public static final int SPLASH_ANIM_DURATION = 1200;
+    public static final int LOGIN_ANIM_DURATION = 500;
+
 }
