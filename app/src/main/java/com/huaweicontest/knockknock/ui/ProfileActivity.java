@@ -61,9 +61,10 @@ public class ProfileActivity extends AppCompatActivity implements AccountHandler
             displayShowCaseView();
     }
 
+
     @Override
-    protected void onResume() {
-        super.onResume();
+    public void onBackPressed() {
+        showSignOutDialog(false);
     }
 
     private void showSignOutDialog(boolean revoke) {
